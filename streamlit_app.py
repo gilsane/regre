@@ -10,6 +10,7 @@ model_files = {
 }
 
 # Google Drive에서 파일 다운로드
+@st.cache(allow_output_mutation=True)
 def download_file(file_id, model_name):
     dest_path = f"{model_name}_{file_id}.pkl"
     try:

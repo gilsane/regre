@@ -11,10 +11,10 @@ model_files = {
 }
 
 # 모델 로드 함수
-@st.cache(allow_output_mutation=True)
+
 def load_model(file_id, model_type):
     url = f"https://drive.google.com/uc?id={file_id}"
-    output = f"{file_id}_{model_type}.pkl"
+    output = f"{file_id}.pkl"
     gdown.download(url, output, quiet=False)
 
     if model_type == "fastai":

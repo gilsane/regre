@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import gdown
+import pandas as pd
 from fastai.tabular.all import load_learner
 
 # Google Drive 파일 ID
@@ -21,9 +22,10 @@ def load_model(file_id, model_type):
         # Fastai 모델 로드
         model = load_learner(output)
     elif model_type == "sklearn":
-        # Scikit-learn 모델 로드
+        # Scikit-learn 모델과 메타정보 로드
         with open(output, 'rb') as f:
-            model = pickle.load(f)
+            model_metadata = pickle.load(f)
+        model = model_metadata  # 메타데이터 전체를 반환
     else:
         raise ValueError(f"알 수 없는 모델 타입: {model_type}")
     return model
@@ -36,9 +38,16 @@ models = {
 }
 st.success("모델이 성공적으로 로드되었습니다!")
 
-# 모델 정보 (Fastai 모델 기준)
-independent_vars = ["변수1", "변수2", "변수3"]  # 예시로 입력값을 사용
-categorical_vars = ["변수2"]  # 예시로 범주형 변수를 설정
+# 독립변수, 범주형 변수 가져오기
+fastai_model = models["선형 회귀"]  # Fastai 모델 사용
+if isinstance(fastai_model, load_learner):
+    independent_vars = fastai_model.dls.cat_names + fastai_model.dls.cont_names
+    categorical_vars = fastai_model.dls.cat_names
+else:
+    # Scikit-learn 메타데이터 사용
+    sklearn_metadata = models["랜덤 포레스트"]
+    independent_vars = sklearn_metadata["independent_vars"]
+    categorical_vars = sklearn_metadata["categorical_vars"]
 numeric_vars = [var for var in independent_vars if var not in categorical_vars]
 
 # 사용자 입력 UI 생성
@@ -60,7 +69,8 @@ if st.sidebar.button("예측 실행"):
             prediction = model.predict(input_data)[0]
         else:
             # Scikit-learn 모델 예측
-            prediction = model.predict(input_data)[0]
+            sklearn_model = model["model"]
+            prediction = sklearn_model.predict(input_data)[0]
         st.write(f"{model_name} 예측값: {prediction:.4f}")
 
     # 모델 선택 및 추가 정보 표시
@@ -70,7 +80,8 @@ if st.sidebar.button("예측 실행"):
         if isinstance(model, load_learner):
             prediction = model.predict(input_data)[0]
         else:
-            prediction = model.predict(input_data)[0]
+            sklearn_model = model["model"]
+            prediction = sklearn_model.predict(input_data)[0]
         
         # 추가 정보 조건 (예시)
         if prediction > 50:

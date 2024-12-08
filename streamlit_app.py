@@ -5,9 +5,9 @@ import gdown
 
 # Google Drive 파일 ID 설정
 model_files = {
-    "선형 회귀": {"file_id": "1-N1PEizrUY1knoryezvrVoWKoN--xl0j", "type": "fastai"},
-    #"랜덤 포레스트": {"file_id": "1-E3o2qvk0j0jtbTdUvd1OhomBovRVvK3", "type": "sklearn"},
-    #"인공 신경망": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "fastai"}
+    #"선형 회귀": {"file_id": "1-N1PEizrUY1knoryezvrVoWKoN--xl0j", "type": "fastai"},
+    "랜덤 포레스트": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "sklearn"},
+    #"인공 신경망": {"file_id": "1-E3o2qvk0j0jtbTdUvd1OhomBovRVvK3", "type": "fastai"}
 }
 
 @st.cache(allow_output_mutation=True)

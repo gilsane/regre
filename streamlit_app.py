@@ -7,9 +7,9 @@ import gdown
 
 # Google Drive 파일 ID
 model_files = {
-    "선형 회귀": "file_id_1",
-    "랜덤 포레스트": "file_id_2",
-    "인공 신경망": "file_id_3"
+    "선형 회귀": "1-N1PEizrUY1knoryezvrVoWKoN--xl0j",
+    "랜덤 포레스트": "1-E3o2qvk0j0jtbTdUvd1OhomBovRVvK3",
+    "인공 신경망": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM"
 }
 
 # 모델 로드 함수

@@ -52,7 +52,8 @@ for name, model in loaded_models.items():
         st.write("Scikit-learn 모델 메타데이터:")
         st.write("독립변수:", model.get("independent_vars"))
         st.write("종속변수:", model.get("dependent_var"))
-        st.write("독립변수 (범주형):", model.get("cat_names"))
+        st.write("독립변수 (범주형):", model.get("categorical_vars"))
+        st.write("독립변수 (수치형):", model.get("numeric_vars"))
         st.write("모델 객체 타입:", type(model.get("model")))
     else:
         st.write("Fastai 모델:")

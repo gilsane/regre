@@ -2,7 +2,6 @@ import streamlit as st
 import pickle
 from fastai.tabular.all import load_learner
 import gdown
-import requests
 
 # Google Drive 파일 ID 설정
 model_files = {
@@ -11,21 +10,11 @@ model_files = {
     "인공 신경망": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "fastai"}
 }
 
-def download_file(file_id, model_name):
+@st.cache(allow_output_mutation=True)
+def load_model(file_id, model_type, model_name):
     url = f"https://drive.google.com/uc?id={file_id}"
     output = f"{model_name}_{file_id}.pkl"
-    response = requests.get(url, stream=True)
-    if response.status_code == 200:
-        with open(output, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-        print(f"{output} 다운로드 완료")
-    else:
-        raise ValueError(f"파일 다운로드 실패: {response.status_code}")
-    return output
-
-def load_model(file_id, model_type, model_name):
-    output = download_file(file_id, model_name)
+    gdown.download(url, output, quiet=False)
 
     if model_type == "fastai":
         try:
@@ -44,14 +33,13 @@ def load_model(file_id, model_type, model_name):
 
     return model
 
-
 # 모델 로드 및 출력
 st.write("모델을 Google Drive에서 로드 중입니다. 잠시만 기다려주세요...")
 loaded_models = {}
 for name, info in model_files.items():
     st.write(f"{name} 로드 중...")
     try:
-        loaded_models[name] = load_model(info["file_id"], info["type"])
+        loaded_models[name] = load_model(info["file_id"], info["type"], name)
         st.success(f"{name} 로드 성공!")
     except Exception as e:
         st.error(f"{name} 로드 실패: {e}")

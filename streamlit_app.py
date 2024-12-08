@@ -10,7 +10,7 @@ model_files = {
     "인공 신경망": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "fastai"}
 }
 
-@st.cache(allow_output_mutation=True)
+#@st.cache(allow_output_mutation=True)
 def load_model(file_id, model_type, model_name):
     url = f"https://drive.google.com/uc?id={file_id}"
     output = f"{model_name}_{file_id}.pkl"

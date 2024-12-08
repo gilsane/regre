@@ -6,15 +6,15 @@ import gdown
 # Google Drive 파일 ID 설정
 model_files = {
     "선형 회귀": {"file_id": "1-N1PEizrUY1knoryezvrVoWKoN--xl0j", "type": "fastai"},
-    "랜덤 포레스트": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "sklearn"},
-    "인공 신경망": {"file_id": "1-E3o2qvk0j0jtbTdUvd1OhomBovRVvK3", "type": "fastai"}
+    "랜덤 포레스트": {"file_id": "1-E3o2qvk0j0jtbTdUvd1OhomBovRVvK3", "type": "sklearn"},
+    "인공 신경망": {"file_id": "1-CUb9h3fdoIfHCIE0pX0B1J1qjUDgkMM", "type": "fastai"}
 }
 
 # 모델 로드 함수
 @st.cache_data
 def load_model(file_id, model_type):
     url = f"https://drive.google.com/uc?id={file_id}"
-    output = f"{file_id}_{model_type}.pkl"
+    output = f"{file_id}.pkl"
     gdown.download(url, output, quiet=False)
 
     if model_type == "fastai":

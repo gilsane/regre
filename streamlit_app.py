@@ -11,7 +11,7 @@ model_files = {
 }
 
 # 모델 로드 함수
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_model(file_id, model_type):
     url = f"https://drive.google.com/uc?id={file_id}"
     output = f"{file_id}_{model_type}.pkl"

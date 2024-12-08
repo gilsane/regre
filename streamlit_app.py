@@ -25,7 +25,8 @@ def load_model(file_id, model_type):
         # Scikit-learn 모델과 메타정보 로드
         with open(output, 'rb') as f:
             model_metadata = pickle.load(f)
-        model = model_metadata  # 메타데이터 전체를 반환
+        assert isinstance(model_metadata, dict), "로드된 데이터가 사전 형태가 아닙니다!"
+
     else:
         raise ValueError(f"알 수 없는 모델 타입: {model_type}")
     return model
